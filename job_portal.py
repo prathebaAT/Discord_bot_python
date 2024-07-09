@@ -1,5 +1,7 @@
 import feedparser
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+import logging
+import time
 
 class JobListing:
     def __init__(self, title, company, location, job_type, link, published, category):
@@ -25,18 +27,24 @@ class JobPortal:
                 location = entry.get('location', 'N/A')
                 job_type = entry.get('type', 'N/A')
                 link = entry.link
-                published = entry.get('published', 'N/A')
+                published_parsed = entry.get('published_parsed', None)
                 category = entry.get('category', 'N/A')
 
-                published_date = datetime.strptime(published, "%a, %d %b %Y %H:%M:%S %Z")
+                if published_parsed is None:
+                    logging.error("Skipping job entry due to missing published date")
+                    continue
 
-                job = JobListing(title, company, location, job_type, link, published, category)
+                published_date = datetime.fromtimestamp(
+                    time.mktime(published_parsed), tz=timezone.utc
+                )
+                
+                job = JobListing(title, company, location, job_type, link, published_date, category)
                 self.job_listings.append(job)
         else:
-            print("No entries found in the RSS feed.")
+            logging.info("No entries found in the RSS feed.")
 
     def get_recent_job_listings(self, days=1):
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         recent_listings = [
             job for job in self.job_listings if job.published >= now - timedelta(days=days)
         ]
