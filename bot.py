@@ -21,7 +21,7 @@ async def on_message(message):
         await send_job_alerts(message.channel)
 
 async def send_job_alerts(channel):
-    feed_url = ' ' #your url link here
+    feed_url = 'https://remotive.com/remote-jobs/feed' 
     portal = JobPortal(feed_url)
     portal.fetch_jobs()
     recent_jobs = portal.get_recent_job_listings(days=1)
@@ -44,4 +44,4 @@ async def send_job_alerts(channel):
         )
         await channel.send(job_message)
 
-client.run('')
+client.run('') #Your Discord_Bot token here
