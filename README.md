@@ -45,7 +45,7 @@ This Discord bot fetches job listings from an Remotive RSS feed and sends recent
 2. Create a new Discord server and add your bot to this server. To do this:
    - Go to the Discord Developer Portal.
    - Create a new application and add a bot to it.
-   - Copy the bot token to the `config.py` file as mentioned above.
+   - Copy the bot token and add your token to the file.
    - Generate an OAuth2 URL with the necessary permissions and use it to invite the bot to your server.
 
 ### Channel Configuration
@@ -72,9 +72,9 @@ You may need to adjust the bot's role and permissions within your Discord server
 - `bot.py`: Contains the Discord bot implementation, handles commands, and sends job alerts.
 
 
-Acknowledgments
+## Acknowledgments
 This project uses job listings from Remotive.com, a remote job board and community.
 
-Reference : https://remotive.com/remote-jobs/rss-feed
+## Reference : https://remotive.com/remote-jobs/rss-feed
 
 
